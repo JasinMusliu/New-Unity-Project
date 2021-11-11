@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoneySystem : MonoBehaviour
+public class SellScript : MonoBehaviour
 {
     //Money variables
     
    
     public int crackPrice;
-    private CoinSystem PengeScript; 
-
+    private CoinSystem PengeScript;
+    
     public Transform Player;
     public float Distance;
     public float IndenforRange;
     public TextMesh SellText;
     public GameObject GameManager;
-    public float coolDownValue = 5.0f;
+    
     [SerializeField]
     bool isSelling = false;
-
+    
 
     // Start is called before the first frame update
 
@@ -41,11 +41,15 @@ public class MoneySystem : MonoBehaviour
                 if(Input.GetButton ("SellButton") && isSelling == false)
                 {
                     PengeScript.totalMoney = PengeScript.totalMoney + crackPrice;
+                    PengeScript.Seconds += PengeScript.AddSeconds;
+                    isSelling = true;
                     
-                    StartCoroutine(CoolDown());
 
+                }
+                if (!Input.GetButton("SellButton"))
+                {
 
-                    
+                    isSelling = false;
 
                 }
 
@@ -59,13 +63,6 @@ public class MoneySystem : MonoBehaviour
 
         }
 
-    }
-
-    IEnumerator CoolDown()
-    {
-        isSelling = true;
-        yield return new WaitForSeconds(coolDownValue);
-        isSelling = false;
     }
 
     
